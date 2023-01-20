@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Outlet } from 'react-router';
 import Navbar from '../components/Navbar';
 
-const BaseScreen = () => {
-  const [search, setSearch] = useState('');
-  
+const BaseScreen = () => {  
   return (
     <div className='flex flex-col h-screen bg-zinc-50 dark:bg-zinc-800'>
       <header>
-        <Navbar search={search} setSearch={setSearch}/>
+        <Navbar/>
       </header>
       <main className='grow overflow-auto'>
-        <Outlet context={{search}}/>
+        <Outlet/>
       </main>
     </div>
   );

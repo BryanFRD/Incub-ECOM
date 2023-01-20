@@ -4,7 +4,7 @@ import BaseScreen from "./screens/BaseScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LoadingScreen from "./screens/LoadingScreen";
 
-const ConnexionScreen = lazy(() => import('./screens/ConnexionScreen'));
+const ConnectionScreen = lazy(() => import('./screens/ConnectionScreen'));
 
 function App() {
   return (
@@ -16,9 +16,9 @@ function App() {
               <HomeScreen />
             </Suspense>
           }/>
-          <Route path='/connexion' element={
+          <Route path='/connection' element={
             <Suspense fallback={<LoadingScreen />}>
-              <ConnexionScreen />
+              <ConnectionScreen />
             </Suspense>
           }/>
         </Route>

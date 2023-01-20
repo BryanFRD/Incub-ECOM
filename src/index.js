@@ -16,11 +16,11 @@ if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.match
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <AuthContextProvider>
+    <AuthContextProvider>
+      <Provider store={store}>
         <App />
-      </AuthContextProvider>
-    </Provider>
+      </Provider>
+    </AuthContextProvider>
   </React.StrictMode>
 );
 

@@ -5,17 +5,17 @@ export const AuthContext = createContext();
 const AuthContextProvider = ({children}) => {
   const [auth, setAuth] = useState();
   
-  const handleSignup = (param) => {
+  const handleSignup = async (param) => {
     console.log('param:', param);
     
   }
   
-  const handleLogin = (param) => {
+  const handleLogin = async (param) => {
     console.log('param:', param);
     
   }
   
-  const handleLogout = (param) => {
+  const handleLogout = async (param) => {
     console.log('param:', param);
     
   }
