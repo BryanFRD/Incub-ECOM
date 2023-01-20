@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BaseScreen from "./screens/BaseScreen";
 import HomeScreen from "./screens/HomeScreen";
