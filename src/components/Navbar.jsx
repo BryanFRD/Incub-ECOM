@@ -3,8 +3,8 @@ import { SunIcon, MoonIcon, ShoppingBagIcon, UserCircleIcon } from '@heroicons/r
 import { Link } from 'react-router-dom';
 import { Popover } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
-import NavbarCartDropdownItem from './NavbarCartDropdownItem';
 import { setSearch } from '../features/navbar-search/navbar-search-slice';
+import NavbarCartDropdownItem from './NavbarCartDropdownItem';
 
 const Navbar = () => {
   const { products, total } = useSelector((state) => state.cart);

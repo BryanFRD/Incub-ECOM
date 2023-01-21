@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BaseScreen from "./screens/BaseScreen";
+import Cart from "./screens/Cart";
 import HomeScreen from "./screens/HomeScreen";
 import LoadingScreen from "./screens/LoadingScreen";
 
@@ -19,6 +20,11 @@ function App() {
           <Route path='/connection' element={
             <Suspense fallback={<LoadingScreen />}>
               <ConnectionScreen />
+            </Suspense>
+          }/>
+          <Route path='/cart' element={
+            <Suspense fallback={<LoadingScreen />}>
+              <Cart />
             </Suspense>
           }/>
         </Route>
