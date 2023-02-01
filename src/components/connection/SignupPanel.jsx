@@ -1,19 +1,33 @@
 import { Field, Formik, Form, ErrorMessage } from 'formik';
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
 import { AuthContext } from '../../contexts/AuthContext';
 import { signupSchema } from '../../validators/AuthValidator';
 
 const SignupPanel = () => {
   const { handleSignup } = useContext(AuthContext);
+  const navigate = useNavigate();
   
-  const handleSubmit = async (values, { setSubmitting }) => {
-    await handleSignup(values);
+  const handleSubmit = (values, {setErrors, setSubmitting}) => {
+    setSubmitting(true);
+    
+    handleSignup(values)
+      .then(() => {
+        toast.success('Inscription réussi');
+        navigate('/');
+      })
+      .catch(error => {
+        setErrors({submit: error});
+        toast.error('Erreur lors de l\'inscription');
+      })
+      .finally(() => setSubmitting(false));
   }
   
   return (
     <Formik initialValues={{lastname: '', firstname: '', email: '', password: ''}} onSubmit={handleSubmit} validationSchema={signupSchema}>
-      {({ isSubmitting }) =>
-        <Form className='flex flex-col gap-5 p-5 border border-t-0 border-zinc-200 dark:border-zinc-600 rounded-b-lg text-zinc-900 dark:text-white'>
+      {({ isSubmitting, errors: {submit}}) =>
+        <Form className='flex max-w-full md:max-w-md flex-col gap-5 p-5 border border-t-0 border-zinc-200 dark:border-zinc-600 rounded-b-lg text-zinc-900 dark:text-white'>
           <div className='flex gap-5 justify-between'>
             <span>Nom :</span>
             <div className='flex flex-col'>
@@ -42,7 +56,12 @@ const SignupPanel = () => {
               <ErrorMessage name='password'>{(msg) => <span className='text-red-500 whitespace-pre-line'>{msg}</span>}</ErrorMessage>
             </div>
           </div>
-          <div className='mx-auto mt-5'>
+          {submit && 
+            <div className='mx-auto text-red-500'>
+              <span className='break-keep'>{submit}</span>
+            </div>
+          }
+          <div className='mx-auto'>
             <button type='submit' className='px-5 py-1 bg-green-600 hover:bg-green-700 rounded-md text-white' disabled={isSubmitting}>
               S'inscrire
             </button>

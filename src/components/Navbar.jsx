@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SunIcon, MoonIcon, ShoppingBagIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom';
 import { Popover } from '@headlessui/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSearch } from '../features/navbar-search/navbar-search-slice';
 import NavbarCartDropdownItem from './NavbarCartDropdownItem';
+import { AuthContext } from '../contexts/AuthContext';
 
 const Navbar = () => {
   const { products, total } = useSelector((state) => state.cart);
   const { search } = useSelector((state) => state.navbarSearch);
   const dispatch = useDispatch();
+  const { auth, handleLogout } = useContext(AuthContext);
   
   const handleSearchOnChange = (event) => {
     dispatch(setSearch(event.target.value));
@@ -54,7 +56,7 @@ const Navbar = () => {
               </Popover.Button>
               <Popover.Panel className="absolute z-10 -right-24 py-3">
                 <div className='bg-zinc-100 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 rounded-lg overflow-hidden w-max'>
-                  {products.length === 0 ?
+                  {!products?.length ?
                     <>
                       <span className='whitespace-nowrap px-5 text-zinc-900 dark:text-white'>Vous n'avez pas d'article dans votre panier</span>
                     </>
@@ -65,7 +67,7 @@ const Navbar = () => {
                       )}
                       <div className='flex mx-2 my-2 gap-3 text-zinc-900 dark:text-white items-center'>
                         <span>{`Total: ${new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(total)}`}</span>
-                        <Popover.Button as={Link} to='/cart' className='text-zinc-900 ml-auto dark:text-white bg-green-600 px-2 py-1 rounded-md'>Valider panier</Popover.Button>
+                        <Popover.Button as={Link} to='/cart' className='ml-auto text-white bg-green-600 px-2 py-1 rounded-md'>Valider panier</Popover.Button>
                       </div>
                     </>
                   }
@@ -77,13 +79,26 @@ const Navbar = () => {
                 <UserCircleIcon className='h-8 w-8 md:h-6 md-6 text-zinc-900 dark:text-white' />
               </Popover.Button>
               <Popover.Panel className='absolute z-20 text-right -right-6 py-3 leading-8'>
-                <div className='flex flex-col bg-zinc-100 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 rounded-lg overflow-hidden w-max'>                  
-                  <Popover.Button as={Link} to='/connection' className='text-zinc-900 dark:text-white px-4 hover:bg-zinc-200 hover:dark:bg-zinc-600 border-b border-zinc-200 dark:border-zinc-600'>
-                    Connexion
-                  </Popover.Button>
-                  <Popover.Button as={Link} to='/connection' className='text-zinc-900 dark:text-white px-4 hover:bg-zinc-200 hover:dark:bg-zinc-600'>
-                    Inscription
-                  </Popover.Button>
+                <div v className='flex flex-col bg-zinc-100 dark:bg-zinc-700 border border-zinc-200 dark:border-zinc-600 rounded-lg overflow-hidden w-max'>                  
+                  {auth ? 
+                    <>
+                      <span className='text-zinc-900 dark:text-white px-4 hover:bg-zinc-200 hover:dark:bg-zinc-600 border-b border-zinc-200 dark:border-zinc-600'>
+                        {`Bonjour ${auth.firstname} !`}
+                      </span>
+                      <Popover.Button className='text-zinc-900 dark:text-white px-4 hover:bg-zinc-200 hover:dark:bg-zinc-600 border-b border-zinc-200 dark:border-zinc-600' onClick={handleLogout}>
+                        Déconnexion
+                      </Popover.Button>
+                    </>
+                    :
+                    <>
+                      <Popover.Button as={Link} to='/connection' className='text-zinc-900 dark:text-white px-4 hover:bg-zinc-200 hover:dark:bg-zinc-600 border-b border-zinc-200 dark:border-zinc-600'>
+                        Connexion
+                      </Popover.Button>
+                      <Popover.Button as={Link} to='/connection' className='text-zinc-900 dark:text-white px-4 hover:bg-zinc-200 hover:dark:bg-zinc-600'>
+                        Inscription
+                      </Popover.Button>
+                    </>
+                  }
                 </div>
               </Popover.Panel>
             </Popover>
