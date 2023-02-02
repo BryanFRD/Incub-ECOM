@@ -3,6 +3,7 @@ import { Outlet } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 import Navbar from '../components/Navbar';
 import 'react-toastify/dist/ReactToastify.css';
+import { XMarkIcon } from '@heroicons/react/24/solid';
 
 const BaseScreen = () => {  
   return (
@@ -15,14 +16,15 @@ const BaseScreen = () => {
       </main>
       <ToastContainer 
           position='bottom-right' 
-          autoClose={1000} 
+          autoClose={2500} 
           hideProgressBar={true}
           newestOnTop={true}
           closeOnClick
           pauseOnFocusLoss={false}
           draggable={false}
           limit={3}
-          toastClassName='bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white'/>
+          toastClassName='bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white'
+          closeButton={<XMarkIcon className='w-6'/>}/>
     </div>
   );
 };

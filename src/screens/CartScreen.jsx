@@ -1,12 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CartProduct from '../components/CartProduct';
+import { validateCart } from '../features/cart/cart-slice';
 
-const Cart = () => {
+const CartScreen = () => {
   const { products, total } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
   
   const handleValidate = () => {
-    
+    dispatch(validateCart());
   }
   
   return (
@@ -28,7 +30,7 @@ const Cart = () => {
         <div className='rounded-lg border border-zinc-200 dark:border-zinc-600 w-full h-full flex flex-col p-5 justify-between text-zinc-900 dark:text-white'>
           <div className='flex flex-col overflow-auto'>
             {products.map((product, index) => 
-              <div className={`flex px-2 p-1 justify-between border-zinc-300 dark:border-zinc-700 ${index < products.length - 1 && 'border-b'}`}>
+              <div key={product.id} className={`flex px-2 p-1 justify-between border-zinc-300 dark:border-zinc-700 ${index < products.length - 1 && 'border-b'}`}>
                 <span>{product.name}</span>
                 <span>{`${new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(product.price * product.amount)}`}</span>
               </div>
@@ -36,7 +38,7 @@ const Cart = () => {
           </div>
           <div className='flex justify-between items-center'>
             <span className='font-semibold text-lg'>{`Total: ${new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(total)}`}</span>
-            <button className='bg-green-600 text-white px-4 py-2 rounded-md'>Valider</button>
+            <button className='bg-green-600 text-white px-4 py-2 rounded-md' onClick={handleValidate}>Valider</button>
           </div>
         </div>
       </div>
@@ -44,4 +46,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartScreen;

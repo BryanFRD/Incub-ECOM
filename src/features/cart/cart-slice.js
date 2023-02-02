@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const initialState = {
   products: [],
@@ -36,8 +37,19 @@ const cartSlice = createSlice({
         state.total -= product.price;
       }
     },
+    validateCart: (state) => {
+      if(state.products.length === 0){
+        toast.error(`Votre liste d'article est vide !`);
+        return;
+      }
+      
+      toast.success(`Commande de ${new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(state.total)} validée.`);
+      
+      state.products = [];
+      state.total = 0;
+    }
   }
 });
 
-export const { addProduct, removeProduct, increaseProductAmount, decreaseProductAmount } = cartSlice.actions;
+export const { addProduct, removeProduct, increaseProductAmount, decreaseProductAmount, validateCart } = cartSlice.actions;
 export default cartSlice.reducer;

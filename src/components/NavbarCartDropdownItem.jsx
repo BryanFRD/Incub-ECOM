@@ -8,7 +8,7 @@ const NavbarCartDropdownItem = ({product}) => {
   
   return (
     <div className='flex gap-5 border-b border-zinc-200 dark:border-zinc-600 justify-between'>
-      <img src={product.src} alt={product.alt} className='w-20 object-cover'/>
+      <img src={product.src} alt={product.alt} className='w-20 object-cover img-pixelated'/>
       <div className='flex gap-5 items-center grow'>
         <div className='flex items-center grow'>
           <button 

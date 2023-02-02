@@ -1,14 +1,14 @@
 import React from 'react';
 import { PlusIcon, MinusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useDispatch } from 'react-redux';
-import { decreaseProductAmount, increaseProductAmount } from '../features/cart/cart-slice';
+import { decreaseProductAmount, increaseProductAmount, removeProduct } from '../features/cart/cart-slice';
 
 const CartProduct = ({ product, className }) => {
   const dispatch = useDispatch();
   
   return (
     <div className={`flex flex-col md:flex-row overflow-hidden border border-t-0 ${className}`}>
-      <img src={product.src} alt={product.alt} className='md:w-52'/>
+      <img src={product.src} alt={product.alt} className='md:w-52 img-pixelated'/>
       <div className='flex flex-col md:flex-row justify-between py-5 px-10 grow gap-14'>
         <div className='flex justify-center items-center'>
           <button
@@ -33,7 +33,9 @@ const CartProduct = ({ product, className }) => {
             <span className='text-1xl'>
               {`Total: ${new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'EUR'}).format(product.price * product.amount)}`}
             </span>
-            <TrashIcon className='w-8 text-red-500'/>
+            <button onClick={() => dispatch(removeProduct(product))}>
+              <TrashIcon className='w-8 text-red-500'/>
+            </button>
           </div>
         </div>
       </div>

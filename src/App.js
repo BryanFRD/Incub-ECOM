@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import BaseScreen from "./screens/BaseScreen";
-import Cart from "./screens/Cart";
+import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import LoadingScreen from "./screens/LoadingScreen";
 
@@ -24,7 +24,7 @@ function App() {
           }/>
           <Route path='/cart' element={
             <Suspense fallback={<LoadingScreen />}>
-              <Cart />
+              <CartScreen />
             </Suspense>
           }/>
         </Route>
